@@ -102,69 +102,71 @@ CREATE TABLE Registra (
 ALTER TABLE Professor ADD CONSTRAINT FK_Professor_2
     FOREIGN KEY (fk_Usuario_CPF)
     REFERENCES Usuario (CPF)
-    ON DELETE CASCADE;
+    ON DELETE CASCADE ON UPDATE CASCADE;
  
 ALTER TABLE Tecnico ADD CONSTRAINT FK_Tecnico_2
     FOREIGN KEY (fk_Usuario_CPF)
     REFERENCES Usuario (CPF)
-    ON DELETE CASCADE;
+    ON DELETE CASCADE ON UPDATE CASCADE;
  
 ALTER TABLE Reserva ADD CONSTRAINT FK_Reserva_2
     FOREIGN KEY (fk_Professor_fk_Usuario_CPF)
     REFERENCES Professor (fk_Usuario_CPF)
-    ON DELETE CASCADE;
+    ON DELETE SET NULL ON UPDATE CASCADE;
  
 ALTER TABLE Aula ADD CONSTRAINT FK_Aula_2
     FOREIGN KEY (fk_Professor_fk_Usuario_CPF)
     REFERENCES Professor (fk_Usuario_CPF)
-    ON DELETE CASCADE;
+    ON DELETE SET NULL ON UPDATE CASCADE;
  
 ALTER TABLE Produto ADD CONSTRAINT FK_Produto_1
     FOREIGN KEY (fk_Prateleiras_Numero_Prateleira)
     REFERENCES Prateleiras (Numero_Prateleira)
-    ON DELETE CASCADE;
+    ON DELETE SET NULL ON UPDATE CASCADE;
  
+
 ALTER TABLE Quimico ADD CONSTRAINT FK_Quimico_2
     FOREIGN KEY (fk_Produto_ID_Prod)
     REFERENCES Produto (ID_Prod)
-    ON DELETE CASCADE;
+    ON DELETE CASCADE ON UPDATE CASCADE;
  
 ALTER TABLE Equipamento ADD CONSTRAINT FK_Equipamento_2
     FOREIGN KEY (fk_Produto_ID_Prod)
     REFERENCES Produto (ID_Prod)
-    ON DELETE CASCADE;
- 
+    ON DELETE CASCADE ON UPDATE CASCADE;
+
+
 ALTER TABLE Realiza_experimento ADD CONSTRAINT FK_Realiza_experimento_1
     FOREIGN KEY (fk_Aula_ID_aula)
     REFERENCES Aula (ID_aula)
-    ON DELETE RESTRICT;
+    ON DELETE SET NULL ON UPDATE CASCADE;
  
 ALTER TABLE Realiza_experimento ADD CONSTRAINT FK_Realiza_experimento_2
     FOREIGN KEY (fk_Experimento_Numero_Experimento)
     REFERENCES Experimento (Numero_Experimento)
-    ON DELETE RESTRICT;
+    ON DELETE SET NULL ON UPDATE CASCADE;
  
 ALTER TABLE Prepara_Prateleiras_Experimento_Tecnico ADD CONSTRAINT FK_Prepara_Prateleiras_Experimento_Tecnico_1
     FOREIGN KEY (fk_Prateleiras_Numero_Prateleira)
     REFERENCES Prateleiras (Numero_Prateleira)
-    ON DELETE NO ACTION;
+    ON DELETE SET NULL ON UPDATE CASCADE;
  
 ALTER TABLE Prepara_Prateleiras_Experimento_Tecnico ADD CONSTRAINT FK_Prepara_Prateleiras_Experimento_Tecnico_2
     FOREIGN KEY (fk_Experimento_Numero_Experimento)
     REFERENCES Experimento (Numero_Experimento)
-    ON DELETE NO ACTION;
+     ON DELETE SET NULL ON UPDATE CASCADE;
  
 ALTER TABLE Prepara_Prateleiras_Experimento_Tecnico ADD CONSTRAINT FK_Prepara_Prateleiras_Experimento_Tecnico_3
     FOREIGN KEY (fk_Tecnico_fk_Usuario_CPF)
     REFERENCES Tecnico (fk_Usuario_CPF)
-    ON DELETE NO ACTION;
+    ON DELETE SET NULL ON UPDATE CASCADE;
  
 ALTER TABLE Registra ADD CONSTRAINT FK_Registra_1
     FOREIGN KEY (fk_Prateleiras_Numero_Prateleira)
     REFERENCES Prateleiras (Numero_Prateleira)
-    ON DELETE SET NULL;
+    ON DELETE SET NULL ON UPDATE CASCADE;
  
 ALTER TABLE Registra ADD CONSTRAINT FK_Registra_2
     FOREIGN KEY (fk_Tecnico_fk_Usuario_CPF)
     REFERENCES Tecnico (fk_Usuario_CPF)
-    ON DELETE SET NULL;
+    ON DELETE SET NULL ON UPDATE CASCADE;
