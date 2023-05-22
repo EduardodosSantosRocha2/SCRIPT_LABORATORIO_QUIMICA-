@@ -284,21 +284,6 @@ VALUES
     ('Cloreto de Sódio', 12, 'Sal branco em forma de cristais', 'Fabricante J', 1.80, '2022-09-10', 5);
 
 
--- Populando a tabela Produto
-INSERT INTO Produto (Nome, ID_Prod, Descricao, Fabricante, Preco, Data_de_fabricacao, fk_Prateleiras_Numero_Prateleira)
-VALUES
-    ('Ácido Sulfúrico', 1, 'Ácido altamente corrosivo', 'Fabricante A', 10.50, '2022-07-01', 1),
-    ('Béquer', 2, 'Recipientes de vidro para experimentos', 'Fabricante B', 15.80, '2022-07-02', 2),
-    ('Hidróxido de Sódio', 3, 'Base forte e corrosiva', 'Fabricante C', 5.80, '2022-07-03', 3),
-    ('Erlenmeyer', 4, 'Recipientes de vidro cônicos', 'Fabricante D', 20.00, '2022-07-04', 4),
-    ('Etanol', 5, 'Álcool etílico', 'Fabricante E', 3.20, '2022-07-05', 5),
-    ('Balão de Destilação', 6, 'Recipientes de vidro para destilação', 'Fabricante F', 25.50, '2022-07-06', 1),
-    ('Dicromato de Potássio', 7, 'Sal laranja em forma de cristais', 'Fabricante G', 8.70, '2022-07-07', 2),
-    ('Bico de Bunsen', 8, 'Queimador para experimentos', 'Fabricante H', 40.00, '2022-07-08', 3),
-    ('Ácido Clorídrico', 9, 'Ácido corrosivo', 'Fabricante I', 6.90, '2022-07-09', 4),
-    ('Tubo de Ensaio', 10, 'Tubos de vidro para testes', 'Fabricante J', 5.00, '2022-07-10', 5);
-
-
 
 -- Populando a tabela Quimico
 INSERT INTO Quimico (Formula_quimica, Concentracao, Classe_de_risco, Volume, Data_de_validade, fk_Produto_ID_Prod)
