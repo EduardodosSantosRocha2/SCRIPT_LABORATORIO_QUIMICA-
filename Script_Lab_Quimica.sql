@@ -292,6 +292,14 @@ VALUES
     ('NaOH', 0.8, 'Base cáustica', 200.0, '2023-06-02', 3),
     ('Cr2O7', 0.3, 'Substância oxidante', 50.0, '2023-06-03', 7),
     ('HCl', 0.7, 'Ácido corrosivo', 150.0, '2023-06-04', 9);
+    
+ALTER TABLE Quimico ADD COLUMN Quantidade REAL;
+
+
+UPDATE Quimico SET Quantidade = 10 WHERE fk_Produto_ID_Prod = 1;
+UPDATE Quimico SET Quantidade = 15 WHERE fk_Produto_ID_Prod = 7;
+UPDATE Quimico SET Quantidade = 5 WHERE fk_Produto_ID_Prod = 3;
+UPDATE Quimico SET Quantidade = 35 WHERE fk_Produto_ID_Prod = 9;
 
 -- Populando a tabela Equipamento
 INSERT INTO Equipamento (Tipo, Capacidade, Condicoes_de_operacao, Calibracao, fk_Produto_ID_Prod)
