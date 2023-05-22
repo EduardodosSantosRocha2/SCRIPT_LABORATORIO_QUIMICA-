@@ -11,7 +11,7 @@ CREATE TABLE Professor (
     Curso_ministrados TEXT,
     Experiencia_de_ensino TEXT,
     Area_de_especializacao TEXT,
-    Num_aulas INTEGER,
+    Num_aulas INTEGER DEFAULT 0,
     fk_Usuario_CPF TEXT PRIMARY KEY
 );
 
@@ -193,15 +193,15 @@ VALUES
 
 
 	-- Populando a tabela Professor
-INSERT INTO Professor (Curso_ministrados, Experiencia_de_ensino, Area_de_especializacao, Num_aulas, fk_Usuario_CPF)
+INSERT INTO Professor (Curso_ministrados, Experiencia_de_ensino, Area_de_especializacao, fk_Usuario_CPF)
 VALUES
-    ('Química Orgânica', '10 anos de experiência', 'Química Orgânica', 4, '11111111111'),
-    ('Química Inorgânica', '5 anos de experiência', 'Química Inorgânica', 3, '22222222222'),
-    ('Físico-Química', '8 anos de experiência', 'Físico-Química', 5, '33333333333'),
-    ('Bioquímica', '3 anos de experiência', 'Bioquímica', 2, '44444444444'),
-    ('Química Analítica', '6 anos de experiência', 'Química Analítica', 4, '55555555555'),
-    ('Química Ambiental', '4 anos de experiência', 'Química Ambiental', 3, '66666666666'),
-    ('Química Industrial', '7 anos de experiência', 'Química Industrial', 4, '77777777777');
+    ('Química Orgânica', '10 anos de experiência', 'Química Orgânica', '11111111111'),
+    ('Química Inorgânica', '5 anos de experiência', 'Química Inorgânica','22222222222'),
+    ('Físico-Química', '8 anos de experiência', 'Físico-Química', '33333333333'),
+    ('Bioquímica', '3 anos de experiência', 'Bioquímica','44444444444'),
+    ('Química Analítica', '6 anos de experiência', 'Química Analítica','55555555555'),
+    ('Química Ambiental', '4 anos de experiência', 'Química Ambiental',  '66666666666'),
+    ('Química Industrial', '7 anos de experiência', 'Química Industrial', '77777777777');
 
 
 -- Populando a tabela Tecnico
