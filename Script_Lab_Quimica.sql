@@ -272,17 +272,17 @@ VALUES
 INSERT INTO Produto (Nome, ID_Prod, Descricao, Fabricante, Preco, Data_de_fabricacao, fk_Prateleiras_Numero_Prateleira)
 VALUES
     ('Ácido Sulfúrico', 1, 'Ácido altamente corrosivo', 'Fabricante A', 10.50, '2022-10-01', 1),
-    ('Hidróxido de Sódio', 2, 'Base forte em forma sólida', 'Fabricante B', 5.25, '2022-09-15', 1),
-    ('Etanol', 3, 'Álcool etílico puro', 'Fabricante C', 8.75, '2022-08-20', 2),
-    ('Dicromato de Potássio', 4, 'Sal cristalino laranja', 'Fabricante D', 12.30, '2022-11-05', 2),
-    ('Ácido Clorídrico', 5, 'Ácido altamente corrosivo', 'Fabricante A', 9.80, '2022-07-10', 3),
-    ('Sulfato de Cobre', 6, 'Sal cristalino azul', 'Fabricante E', 6.90, '2022-06-25', 3),
-    ('Carbonato de Cálcio', 7, 'Sal branco em forma de pó', 'Fabricante F', 4.50, '2022-08-01', 4),
-    ('Fenolftaleína', 8, 'Indicador de pH em solução alcoólica', 'Fabricante G', 3.25, '2022-09-20', 4),
-    ('Permanganato de Potássio', 9, 'Sal cristalino roxo', 'Fabricante H', 7.60, '2022-07-15', 5),
-    ('Ácido Nítrico', 10, 'Ácido altamente corrosivo', 'Fabricante A', 11.80, '2022-06-30', 5),
-    ('Água Destilada', 11, 'Água pura destilada', 'Fabricante I', 2.50, '2022-07-05', 5),
-    ('Cloreto de Sódio', 12, 'Sal branco em forma de cristais', 'Fabricante J', 1.80, '2022-09-10', 5);
+    ('Espectrômetro', 2, 'Espectrômetro de Massa', 'Fabricante B', 5.25, '2022-09-15', 2),
+    ('Etanol', 3, 'Álcool etílico puro', 'Fabricante C', 8.75, '2022-08-20', 3),
+    ('Dicromato de Potássio', 4, 'Sal cristalino laranja', 'Fabricante D', 12.30, '2022-11-05', 4),
+    ('Ácido Clorídrico', 5, 'Ácido altamente corrosivo', 'Fabricante A', 9.80, '2022-07-10', 5),
+    ('Agitador magnético', 6, 'Agitador magnético com rotação', 'Fabricante E', 6.90, '2022-06-25', 6),
+    ('Carbonato de Cálcio', 7, 'Sal branco em forma de pó', 'Fabricante F', 4.50, '2022-08-01', 7),
+    ('Destilador', 8, 'Destilador de água', 'Fabricante G', 3.25, '2022-09-20', 8),
+    ('Permanganato de Potássio', 9, 'Sal cristalino roxo', 'Fabricante H', 7.60, '2022-07-15', 9),
+    ('Centrífuga', 10, 'Centrífuga de bancada', 'Fabricante A', 11.80, '2022-06-30', 10),
+    ('Água Destilada', 11, 'Água pura destilada', 'Fabricante I', 2.50, '2022-07-05', 11),
+    ('Cloreto de Sódio', 12, 'Sal branco em forma de cristais', 'Fabricante J', 1.80, '2022-09-10', 12);
 
 
 
