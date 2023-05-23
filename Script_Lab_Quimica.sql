@@ -225,7 +225,18 @@ VALUES
     (2, 'Prateleira B', 80),
     (3, 'Prateleira C', 120),
     (4, 'Prateleira D', 90),
-    (5, 'Prateleira E', 110);
+    (5, 'Prateleira P', 110),
+    (6, 'Prateleira E', 110),
+    (7, 'Prateleira F', 100),
+    (8, 'Prateleira G', 80),
+    (9, 'Prateleira H', 120),
+    (10, 'Prateleira I', 90),
+    (11, 'Prateleira J', 110),
+    (12, 'Prateleira K', 100),
+    (13, 'Prateleira L', 80),
+    (14, 'Prateleira M', 120),
+    (15, 'Prateleira N', 90),
+    (16, 'Prateleira 0', 110);
 	
 	
 	
