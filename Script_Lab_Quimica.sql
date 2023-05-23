@@ -50,7 +50,8 @@ CREATE TABLE Experimento (
     Numero_Experimento INTEGER PRIMARY KEY,
     Arquivo_PDF BYTEA,
     Discussao TEXT,
-    Arquivo_IMG BYTEA
+    Arquivo_IMG BYTEA,
+    Vezes_Realizadas INTEGER
 );
 
 CREATE TABLE Produto (
@@ -69,7 +70,8 @@ CREATE TABLE Quimico (
     Classe_de_risco TEXT,
     Volume REAL,
     Data_de_validade DATE,
-    fk_Produto_ID_Prod INTEGER PRIMARY KEY
+    fk_Produto_ID_Prod INTEGER PRIMARY KEY,
+    Quantidade_Quimico REAL
 );
 
 CREATE TABLE Equipamento (
@@ -83,7 +85,6 @@ CREATE TABLE Equipamento (
 CREATE TABLE Realiza_experimento (
     fk_Aula_ID_aula INTEGER,
     fk_Experimento_Numero_Experimento INTEGER,
-    Vezes_Realizadas INTEGER,
     Observacao TEXT
 );
 
@@ -255,16 +256,16 @@ VALUES
 
 
 -- Populando a tabela Experimento
-INSERT INTO Experimento (Objetivo, Nome, Numero_Experimento, Arquivo_PDF, Discussao, Arquivo_IMG)
+INSERT INTO Experimento (Objetivo, Nome, Numero_Experimento, Arquivo_PDF, Discussao, Arquivo_IMG, Vezes_Realizadas)
 VALUES
-    ('Determinação da Densidade', 'Experimento 1', 1, NULL, 'Discussão do experimento 1', NULL),
-    ('Análise de pH', 'Experimento 2', 2, NULL, 'Discussão do experimento 2', NULL),
-    ('Síntese de uma Substância', 'Experimento 3', 3, NULL, 'Discussão do experimento 3', NULL),
-    ('Determinação de Massa Molar', 'Experimento 4', 4, NULL, 'Discussão do experimento 4', NULL),
-    ('Identificação de Compostos', 'Experimento 5', 5, NULL, 'Discussão do experimento 5', NULL),
-    ('Titulação Ácido-Base', 'Experimento 6', 6, NULL, 'Discussão do experimento 6', NULL),
-    ('Extração de Substâncias', 'Experimento 7', 7, NULL, 'Discussão do experimento 7', NULL),
-    ('Cromatografia em Papel', 'Experimento 8', 8, NULL, 'Discussão do experimento 8', NULL);
+    ('Determinação da Densidade', 'Experimento 1', 1, NULL, 'Discussão do experimento 1', NULL,3),
+    ('Análise de pH', 'Experimento 2', 2, NULL, 'Discussão do experimento 2', NULL,1),
+    ('Síntese de uma Substância', 'Experimento 3', 3, NULL, 'Discussão do experimento 3', NULL,5),
+    ('Determinação de Massa Molar', 'Experimento 4', 4, NULL, 'Discussão do experimento 4', NULL,7),
+    ('Identificação de Compostos', 'Experimento 5', 5, NULL, 'Discussão do experimento 5', NULL,8),
+    ('Titulação Ácido-Base', 'Experimento 6', 6, NULL, 'Discussão do experimento 6', NULL,6),
+    ('Extração de Substâncias', 'Experimento 7', 7, NULL, 'Discussão do experimento 7', NULL,9),
+    ('Cromatografia em Papel', 'Experimento 8', 8, NULL, 'Discussão do experimento 8', NULL,2);
 
 
 -- Populando a tabela Produto com 12 linhas
@@ -286,12 +287,12 @@ VALUES
 
 
 -- Populando a tabela Quimico
-INSERT INTO Quimico (Formula_quimica, Concentracao, Classe_de_risco, Volume, Data_de_validade, fk_Produto_ID_Prod)
+INSERT INTO Quimico (Formula_quimica, Concentracao, Classe_de_risco, Volume, Data_de_validade, fk_Produto_ID_Prod,Quantidade_Quimico)
 VALUES
-    ('H2SO4', 0.5, 'Ácido corrosivo', 100.0, '2023-06-01', 1),
-    ('NaOH', 0.8, 'Base cáustica', 200.0, '2023-06-02', 3),
-    ('Cr2O7', 0.3, 'Substância oxidante', 50.0, '2023-06-03', 7),
-    ('HCl', 0.7, 'Ácido corrosivo', 150.0, '2023-06-04', 9);
+    ('H2SO4', 0.5, 'Ácido corrosivo', 100.0, '2023-06-01', 1,48.8),
+    ('NaOH', 0.8, 'Base cáustica', 200.0, '2023-06-02', 3,9),
+    ('Cr2O7', 0.3, 'Substância oxidante', 50.0, '2023-06-03', 7,90),
+    ('HCl', 0.7, 'Ácido corrosivo', 150.0, '2023-06-04', 9,100);
     
 ALTER TABLE Quimico ADD COLUMN Quantidade REAL;
 
@@ -311,13 +312,13 @@ VALUES
 
 
 -- Populando a tabela Realiza_experimento
-INSERT INTO Realiza_experimento (fk_Aula_ID_aula, fk_Experimento_Numero_Experimento, Vezes_Realizadas, Observacao)
+INSERT INTO Realiza_experimento (fk_Aula_ID_aula, fk_Experimento_Numero_Experimento, Observacao)
 VALUES
-    (1, 1, 3, 'Experimento realizado com sucesso'),
-    (2, 2, 2, 'Experimento apresentou resultados promissores'),
-    (3, 1, 1, 'Experimento precisa de ajustes'),
-    (4, 3, 2, 'Experimento concluído com êxito'),
-    (5, 2, 1, 'Experimento em andamento');
+    (1, 1,'Experimento realizado com sucesso'),
+    (2, 2,'Experimento apresentou resultados promissores'),
+    (3, 1,'Experimento precisa de ajustes'),
+    (4, 3,'Experimento concluído com êxito'),
+    (5, 2,'Experimento em andamento');
 
 -- Populando a tabela Prepara_Prateleiras_Experimento_Tecnico
 INSERT INTO Prepara_Prateleiras_Experimento_Tecnico (fk_Prateleiras_Numero_Prateleira, fk_Experimento_Numero_Experimento, fk_Tecnico_fk_Usuario_CPF, Quantidade)
