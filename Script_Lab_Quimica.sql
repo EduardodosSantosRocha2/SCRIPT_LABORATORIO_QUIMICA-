@@ -498,3 +498,30 @@ BEGIN
         U.CPF = p_CPF;
 END;
 $$ LANGUAGE plpgsql;
+
+
+--Procedure 3
+CREATE OR REPLACE FUNCTION verificaTurno()
+RETURNS VOID AS $$
+DECLARE 
+	auxTurno RECORD;
+BEGIN 
+	FOR auxTurno IN SELECT ID_RESERVA, HORARIO_RESERVA FROM Reserva LOOP
+	
+ 		IF auxTurno.HORARIO_RESERVA >= '06:00:00' AND auxTurno.HORARIO_RESERVA <= '12:00:00' THEN
+			UPDATE Reserva SET TURNO = 'Matutino' WHERE ID_RESERVA = auxTurno.ID_RESERVA;
+		
+		ELSIF auxTurno.HORARIO_RESERVA >= '12:00:00' AND auxTurno.HORARIO_RESERVA <= '18:00:00' THEN 
+				UPDATE Reserva SET TURNO = 'Vespertino' WHERE ID_RESERVA = auxTurno.ID_RESERVA;
+		
+		ELSE
+			UPDATE Reserva SET TURNO = 'Noturno' WHERE ID_RESERVA = auxTurno.ID_RESERVA;
+	END IF;	
+	
+	END LOOP;
+
+
+END;
+
+$$ LANGUAGE plpgsql;
+
