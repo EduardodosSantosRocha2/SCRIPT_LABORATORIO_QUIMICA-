@@ -341,3 +341,160 @@ VALUES
     (3, '56789101234'),
     (4, '34567891012'),
     (5, '23456789101');
+
+--Triggers
+--1
+CREATE OR REPLACE FUNCTION atualizar_numero_aulas()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF (TG_OP = 'INSERT') THEN
+        UPDATE Professor
+        SET Num_aulas = Num_aulas + 1
+        WHERE fk_Usuario_CPF = NEW.fk_Professor_fk_Usuario_CPF;
+    ELSIF (TG_OP = 'DELETE') THEN
+        UPDATE Professor
+        SET Num_aulas = Num_aulas - 1
+        WHERE fk_Usuario_CPF = OLD.fk_Professor_fk_Usuario_CPF;
+    END IF;
+
+    RETURN NULL;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER atualizar_numero_aulas_trigger
+AFTER INSERT OR DELETE ON Reserva
+FOR EACH ROW
+EXECUTE FUNCTION atualizar_numero_aulas();
+
+
+--Triggers
+--2
+
+CREATE OR REPLACE FUNCTION decrementar_quantidade_quimico()
+RETURNS TRIGGER AS $$
+DECLARE 
+	ID_produto INTEGER;
+	Vezes_Realizadas1 INTEGER;
+	Quantidade_Quimico1 REAL;
+	
+BEGIN
+
+	SELECT ID_Prod INTO ID_produto FROM Produto 
+	WHERE fk_Prateleiras_Numero_Prateleira = NEW.fk_Prateleiras_Numero_Prateleira LIMIT 1;
+	RAISE NOTICE 'ID %', ID_produto;
+	
+	SELECT Vezes_Realizadas INTO Vezes_Realizadas1 FROM Experimento
+	WHERE Numero_Experimento = NEW.fk_Experimento_Numero_Experimento LIMIT 1;
+	
+	RAISE NOTICE 'VZ %', Vezes_Realizadas1;
+	
+	
+	SELECT Quantidade_Quimico INTO Quantidade_Quimico1 FROM Quimico
+	WHERE fk_Produto_ID_Prod = ID_produto;
+	
+	RAISE NOTICE 'Quantidade %', Quantidade_Quimico1;
+
+
+
+	IF Quantidade_Quimico1 - (NEW.Quantidade * Vezes_Realizadas1) >= 0 THEN 
+		
+		UPDATE Quimico
+		SET Quantidade_Quimico = Quantidade_Quimico - (NEW.Quantidade * Vezes_Realizadas1)
+		WHERE fk_Produto_ID_Prod = ID_produto;
+
+	ELSE
+		RAISE EXCEPTION 'Quantidade de produto não disponível';
+	
+	END IF;
+	
+
+	RETURN NULL;
+END;
+$$ LANGUAGE 'plpgsql';
+
+CREATE TRIGGER decrementar_quantidade_quimico_trigger
+AFTER INSERT ON Prepara_Prateleiras_Experimento_Tecnico
+FOR EACH ROW
+EXECUTE FUNCTION decrementar_quantidade_quimico();
+
+
+--Triggers
+--3
+
+CREATE OR REPLACE FUNCTION atualizar_produto_prateleira()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF NEW.Capacidade_de_armazenamento = 0 THEN
+        UPDATE produto SET fk_Prateleiras_Numero_Prateleira = NULL 
+        WHERE fk_Prateleiras_Numero_Prateleira = NEW.numero_prateleira;
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE TRIGGER atualizar_prateleira 
+AFTER UPDATE ON prateleiras
+FOR EACH ROW
+EXECUTE FUNCTION atualizar_produto_prateleira();
+
+
+
+
+
+
+--Procedures
+--1
+
+CREATE OR REPLACE PROCEDURE VerificarDisponibilidadeLaboratorio(IN p_Data DATE, IN p_Hora TIME)
+LANGUAGE plpgsql
+AS $$
+DECLARE
+    v_Disponivel BOOLEAN;
+BEGIN
+    -- Verifica se o laboratório está disponível na data e hora especificadas
+    SELECT NOT EXISTS (
+        SELECT 1
+        FROM Reserva
+        WHERE DATA_RESERVA = p_Data
+        AND HORARIO_RESERVA = p_Hora
+    ) INTO v_Disponivel;
+    
+    -- Retorna o resultado da disponibilidade
+    IF v_Disponivel THEN
+        RAISE NOTICE 'O laboratório está disponível na data % e hora %.', p_Data, p_Hora;
+    ELSE
+        RAISE NOTICE 'O laboratório não está disponível na data % e hora %.', p_Data, p_Hora;
+    END IF;
+END;
+$$;
+
+--Procedure2
+CREATE OR REPLACE FUNCTION ObterInformacoesUsuario(p_CPF TEXT)
+RETURNS TABLE (
+    CPF TEXT,
+    Email TEXT,
+    Nome TEXT,
+    Telefone TEXT,
+    Funcao TEXT
+)
+AS $$
+BEGIN
+    RETURN QUERY
+    SELECT
+        U.CPF,
+        U.Email,
+        U.Nome,
+        U.Telefone,
+        CASE
+            WHEN P.fk_Usuario_CPF IS NOT NULL THEN 'Professor'
+            WHEN T.fk_Usuario_CPF IS NOT NULL THEN 'Tecnico'
+            ELSE 'N/A'
+        END AS Funcao
+    FROM
+        Usuario U
+    LEFT JOIN Professor P ON U.CPF = P.fk_Usuario_CPF
+    LEFT JOIN Tecnico T ON U.CPF = T.fk_Usuario_CPF
+    WHERE
+        U.CPF = p_CPF;
+END;
+$$ LANGUAGE plpgsql;
