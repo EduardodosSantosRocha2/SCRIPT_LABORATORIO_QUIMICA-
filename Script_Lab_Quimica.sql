@@ -445,9 +445,8 @@ EXECUTE FUNCTION atualizar_produto_prateleira();
 --Procedures
 --1
 
-CREATE OR REPLACE PROCEDURE VerificarDisponibilidadeLaboratorio(IN p_Data DATE, IN p_Hora TIME)
-LANGUAGE plpgsql
-AS $$
+CREATE OR REPLACE FUNCTION VerificarDisponibilidadeLaboratorio(p_Data DATE, p_Hora TIME)
+RETURNS VOID AS $$
 DECLARE
     v_Disponivel BOOLEAN;
 BEGIN
@@ -466,7 +465,8 @@ BEGIN
         RAISE NOTICE 'O laboratório não está disponível na data % e hora %.', p_Data, p_Hora;
     END IF;
 END;
-$$;
+$$ LANGUAGE plpgsql;
+
 
 --Procedure2
 CREATE OR REPLACE FUNCTION ObterInformacoesUsuario(p_CPF TEXT)
