@@ -1,4 +1,7 @@
 /* Lógico_1: */
+create sequence if not exists res increment 1 start 1;
+create sequence if not exists aul increment 1 start 1;
+
 
 CREATE TABLE Usuario (
     CPF TEXT PRIMARY KEY,
@@ -28,18 +31,23 @@ CREATE TABLE Prateleiras (
     Capacidade_de_armazenamento REAL
 );
 
+
 CREATE TABLE Reserva (
-    ID_RESERVA INTEGER PRIMARY KEY,
+    ID_RESERVA INTEGER DEFAULT nextval('res') PRIMARY KEY,
     HORARIO_RESERVA TIME,
     DATA_RESERVA DATE,
     TURNO TEXT,
     fk_Professor_fk_Usuario_CPF TEXT
 );
 
+
+
+
+
 CREATE TABLE Aula (
     Topico TEXT,
-    ID_aula INTEGER PRIMARY KEY,
-    Topicos_abordado TEXT,
+    ID_aula INTEGER DEFAULT nextval('aul') PRIMARY KEY,
+    Topicos_abordado TEXT DEFAUlT 'TPO',
     Nome TEXT,
     fk_Professor_fk_Usuario_CPF TEXT
 );
@@ -51,7 +59,7 @@ CREATE TABLE Experimento (
     Arquivo_PDF BYTEA,
     Discussao TEXT,
     Arquivo_IMG BYTEA,
-    Vezes_Realizadas INTEGER
+    Vezes_Realizadas INTEGER CHECK(Vezes_Realizadas > 0)
 );
 
 CREATE TABLE Produto (
@@ -59,7 +67,7 @@ CREATE TABLE Produto (
     ID_Prod INTEGER PRIMARY KEY,
     Descricao TEXT,
     Fabricante TEXT,
-    Preco REAL,
+    Preco REAL CHECK(Preco > 0),
     Data_de_fabricacao DATE,
     fk_Prateleiras_Numero_Prateleira INTEGER
 );
@@ -173,6 +181,7 @@ ALTER TABLE Registra ADD CONSTRAINT FK_Registra_2
     ON DELETE SET NULL ON UPDATE CASCADE;
 
 
+
 -- Populando a tabela Usuario
 INSERT INTO Usuario (CPF, Email, Nome, Telefone)
 VALUES
@@ -241,29 +250,29 @@ VALUES
 	
 	
 -- Populando a tabela Reserva
-INSERT INTO Reserva (ID_RESERVA, HORARIO_RESERVA, DATA_RESERVA, TURNO, fk_Professor_fk_Usuario_CPF)
+INSERT INTO Reserva (HORARIO_RESERVA, DATA_RESERVA, TURNO, fk_Professor_fk_Usuario_CPF)
 VALUES
-    (1, '10:00:00', '2023-05-20', 'Manhã', '11111111111'),
-    (2, '14:30:00', '2023-05-21', 'Tarde', '22222222222'),
-    (3, '09:00:00', '2023-05-22', 'Manhã', '33333333333'),
-    (4, '16:00:00', '2023-05-23', 'Tarde', '44444444444'),
-    (5, '11:30:00', '2023-05-24', 'Manhã', '55555555555'),
-    (6, '13:00:00', '2023-05-25', 'Tarde', '66666666666'),
-    (7, '15:30:00', '2023-05-26', 'Tarde', '77777777777'),
-    (8, '10:30:00', '2023-05-27', 'Manhã', '11111111111'),
-    (9, '12:00:00', '2023-05-28', 'Manhã', '22222222222'),
-    (10, '14:00:00', '2023-05-29', 'Tarde', '33333333333');
+    ('10:00:00', '2023-05-20', 'Manhã', '11111111111'),
+    ('14:30:00', '2023-05-21', 'Tarde', '22222222222'),
+    ('09:00:00', '2023-05-22', 'Manhã', '33333333333'),
+    ('16:00:00', '2023-05-23', 'Tarde', '44444444444'),
+    ('11:30:00', '2023-05-24', 'Manhã', '55555555555'),
+    ('13:00:00', '2023-05-25', 'Tarde', '66666666666'),
+    ('15:30:00', '2023-05-26', 'Tarde', '77777777777'),
+    ('10:30:00', '2023-05-27', 'Manhã', '11111111111'),
+    ('12:00:00', '2023-05-28', 'Manhã', '22222222222'),
+    ('14:00:00', '2023-05-29', 'Tarde', '33333333333');
 
 -- Populando a tabela Aula
-INSERT INTO Aula (Topico, ID_aula, Topicos_abordado, Nome, fk_Professor_fk_Usuario_CPF)
+INSERT INTO Aula (Topico,Topicos_abordado, Nome, fk_Professor_fk_Usuario_CPF)
 VALUES
-    ('Introdução à Química', 1, 'Conceitos básicos de química', 'Aula 1', '11111111111'),
-    ('Estrutura Atômica', 2, 'Modelos atômicos, número atômico e massa atômica', 'Aula 2', '22222222222'),
-    ('Ligações Químicas', 3, 'Ligação iônica, covalente e metálica', 'Aula 3', '33333333333'),
-    ('Reações Químicas', 4, 'Tipos de reações químicas', 'Aula 4', '44444444444'),
-    ('Equilíbrio Químico', 5, 'Princípio de Le Chatelier, constante de equilíbrio', 'Aula 5', '55555555555'),
-    ('Cinética Química', 6, 'Lei da velocidade, fatores que afetam a velocidade', 'Aula 6', '66666666666'),
-    ('Termodinâmica', 7, 'Leis da termodinâmica, entalpia e entropia', 'Aula 7', '77777777777');
+    ('Introdução à Química','Conceitos básicos de química', 'Aula 1', '11111111111'),
+    ('Estrutura Atômica','Modelos atômicos, número atômico e massa atômica', 'Aula 2', '22222222222'),
+    ('Ligações Químicas','Ligação iônica, covalente e metálica', 'Aula 3', '33333333333'),
+    ('Reações Químicas','Tipos de reações químicas', 'Aula 4', '44444444444'),
+    ('Equilíbrio Químico','Princípio de Le Chatelier, constante de equilíbrio', 'Aula 5', '55555555555'),
+    ('Cinética Química','Lei da velocidade, fatores que afetam a velocidade', 'Aula 6', '66666666666'),
+    ('Termodinâmica','Leis da termodinâmica, entalpia e entropia', 'Aula 7', '77777777777');
 
 
 -- Populando a tabela Experimento
@@ -341,6 +350,8 @@ VALUES
     (3, '56789101234'),
     (4, '34567891012'),
     (5, '23456789101');
+	
+	
 
 --Triggers
 --1
@@ -524,4 +535,3 @@ BEGIN
 END;
 
 $$ LANGUAGE plpgsql;
-
