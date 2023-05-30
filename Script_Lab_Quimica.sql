@@ -5,6 +5,7 @@ create sequence if not exists aul increment 1 start 1;
 
 CREATE TABLE Usuario (
     CPF TEXT PRIMARY KEY,
+    Senha TEXT,
     Email TEXT,
     Nome TEXT,
     Telefone TEXT
