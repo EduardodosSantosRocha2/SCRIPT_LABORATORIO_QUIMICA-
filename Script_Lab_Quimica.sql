@@ -535,3 +535,20 @@ BEGIN
 END;
 
 $$ LANGUAGE plpgsql;
+
+-- VISÕES
+CREATE VIEW INFO_AULAS AS
+SELECT U.Nome,A.Topico,R.HORARIO_RESERVA
+FROM Professor AS P,Aula AS A,Reserva AS R, Usuario AS U 
+WHERE R.fk_Professor_fk_Usuario_CPF = P.fk_Usuario_CPF 
+AND A.fk_Professor_fk_Usuario_CPF = P.fk_Usuario_CPF 
+AND P.fk_Usuario_CPF = U.CPF;
+	
+
+CREATE VIEW INFO_PREPARA AS 
+SELECT U.Nome AS NomeUsuario, E.Nome AS NomeExperimento, P.Nome AS NomePrateleira
+FROM Usuario AS U, Experimento AS E, Prateleiras AS P, Tecnico AS T, Prepara_Prateleiras_Experimento_Tecnico AS Prepara
+WHERE Prepara.fk_Prateleiras_Numero_Prateleira = P.Numero_Prateleira
+AND Prepara.fk_Experimento_Numero_Experimento = E.Numero_Experimento
+AND Prepara.fk_Tecnico_fk_Usuario_CPF = T.fk_Usuario_CPF
+AND U.CPF = T.fk_Usuario_CPF;
