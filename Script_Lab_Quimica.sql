@@ -516,7 +516,7 @@ $$ LANGUAGE plpgsql;
 
 --Procedure 3
 CREATE OR REPLACE FUNCTION verificaTurno()
-RETURNS VOID AS $$
+RETURNS INT AS $$
 DECLARE 
 	auxTurno RECORD;
 BEGIN 
