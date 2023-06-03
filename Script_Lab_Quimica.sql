@@ -458,7 +458,7 @@ EXECUTE FUNCTION atualizar_produto_prateleira();
 --1
 
 CREATE OR REPLACE FUNCTION VerificarDisponibilidadeLaboratorio(p_Data DATE, p_Hora TIME)
-RETURNS VOID AS $$
+RETURNS BOOLEAN AS $$
 DECLARE
     v_Disponivel BOOLEAN;
 BEGIN
@@ -473,8 +473,10 @@ BEGIN
     -- Retorna o resultado da disponibilidade
     IF v_Disponivel THEN
         RAISE NOTICE 'O laboratório está disponível na data % e hora %.', p_Data, p_Hora;
+		RETURN true;
     ELSE
         RAISE NOTICE 'O laboratório não está disponível na data % e hora %.', p_Data, p_Hora;
+		RETURN false;
     END IF;
 END;
 $$ LANGUAGE plpgsql;
