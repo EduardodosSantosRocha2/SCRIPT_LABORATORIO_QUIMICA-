@@ -534,7 +534,7 @@ BEGIN
 	
 	END LOOP;
 
-
+RETURN 1;
 END;
 
 $$ LANGUAGE plpgsql;
