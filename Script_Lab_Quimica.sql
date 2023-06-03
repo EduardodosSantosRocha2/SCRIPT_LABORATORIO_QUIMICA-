@@ -555,3 +555,38 @@ WHERE Prepara.fk_Prateleiras_Numero_Prateleira = P.Numero_Prateleira
 AND Prepara.fk_Experimento_Numero_Experimento = E.Numero_Experimento
 AND Prepara.fk_Tecnico_fk_Usuario_CPF = T.fk_Usuario_CPF
 AND U.CPF = T.fk_Usuario_CPF;
+
+
+BEGIN;
+
+-- Operação 1: Inserir um novo experimento na tabela Experimento
+INSERT INTO Experimento (Objetivo, Nome, Numero_Experimento, Arquivo_PDF, Discussao, Arquivo_IMG, Vezes_Realizadas)
+VALUES ('Determinação da Concentração', 'Experimento 5', 545, NULL, 'Discussão do experimento 5', NULL, 3);
+
+INSERT INTO Usuario (CPF, Email, Nome, Telefone)
+VALUES('77777778', 'usuario1@email.com', 'Usuário 1', '111111111');
+
+-- Operação 3: Atualizar a quantidade de químico na tabela Quimico
+UPDATE Quimico
+SET Quantidade_Quimico = Quantidade_Quimico + 100
+WHERE fk_Produto_ID_Prod = 1001;
+
+ROLLBACK;
+
+
+
+BEGIN;
+
+-- Operação 1: Atualizar o preço do produto na tabela Produto
+UPDATE Produto
+SET Preco = Preco * 1.1
+WHERE ID_Prod = 28;
+
+INSERT INTO Usuario (CPF,senha,Email, Nome, Telefone)
+VALUES('77777778','123','usuario1@email.com', 'Usuário 1', '111111111');
+
+-- Operação 3: Excluir um experimento da tabela Experimento
+DELETE FROM Experimento
+WHERE Numero_Experimento = 4456;
+
+COMMIT;
