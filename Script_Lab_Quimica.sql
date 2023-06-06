@@ -73,6 +73,12 @@ CREATE TABLE Produto (
     fk_Prateleiras_Numero_Prateleira INTEGER
 );
 
+CREATE SEQUENCE produto_seq;
+
+-- Alteração da tabela para adicionar a sequência na coluna ID_Prod
+ALTER TABLE Produto
+ALTER COLUMN ID_Prod SET DEFAULT NEXTVAL('produto_seq');
+
 CREATE TABLE Quimico (
     Formula_quimica TEXT,
     Concentracao REAL,
